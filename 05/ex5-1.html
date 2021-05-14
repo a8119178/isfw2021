@@ -13,6 +13,9 @@
         function button1Pressed() {
             doSelect();
         }
+        function button2Pressed() {
+            doSearch();
+        }
 
         async function doSelect() {
             var sql = 'select * from Tweets order by time desc limit 20';
@@ -22,7 +25,26 @@
             html = html + '<ul>';
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
-                html = html + '<li>' + object.tweet + "," + object.id + "," + object.name + "," + object.time + '</li>';
+                html = html + '<li>' + object.tweet + "," + object.id + "," + object.name + "," +
+                    object.time + '</li>';
+            }
+            html = html + '</ul>';
+            document.getElementById('result').innerHTML = html;
+        }
+
+
+
+        async function doSearch() {
+            var sch = document.getElementById("search").value;
+            var sql = 'select * from Tweets where tweet like "%' + sch + '%"';
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '';
+            html = html + '<ul>';
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                html = html + '<li>' + object.tweet + "," + object.id + "," + object.name + "," +
+                    object.time + '</li>';
             }
             html = html + '</ul>';
             document.getElementById('result').innerHTML = html;
@@ -34,6 +56,8 @@
 <body>
     <h1>Tweets</h1>
     <button onclick="button1Pressed()">X</button>
+    <input id="search" type="textfield">
+    <button onclick="button2Pressed()">検索</button>
     <hr>
     <p id="result">xxxx</p>
 </body>

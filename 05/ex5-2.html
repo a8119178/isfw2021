@@ -12,7 +12,7 @@
     <script>
         function button1Pressed() {
             doInsert();
-            tf2.value = "";
+            tf2.value = '';
         }
 
         async function doInsert() {
@@ -24,11 +24,15 @@
             console.log(objects);
 
             document.getElementById('result').innerHTML = "tweetしました";
+
         }
 
-        function button2Pressed() {
+
+        $().ready(function () {
             doSelect();
-        }
+        });
+
+
         function button3Pressed() {
             doSearch();
         }
@@ -38,7 +42,7 @@
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';
-            html = html + '<table border = "1">';
+            html = html + '<table border="1">';
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
                 html = html + '<tr>'
@@ -51,10 +55,8 @@
             document.getElementById('result').innerHTML = html;
         }
 
-
-
         async function doSearch() {
-            var sch = document.getElementById("search").value;
+            var sch = document.getElementById('tf3').value;
             var sql = 'select * from Tweets where tweet like "%' + sch + '%"';
             var objects = await osql.connect(sql);
             console.log(objects);
@@ -62,8 +64,7 @@
             html = html + '<ul>';
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
-                html = html + '<li>' + object.tweet + "," + object.id + "," + object.name + "," +
-                    object.time + '</li>';
+                html = html + '<li>' + object.tweet + "," + object.id + "," + object.name + "," + object.time + '</li>';
             }
             html = html + '</ul>';
             document.getElementById('result').innerHTML = html;
@@ -80,13 +81,10 @@
     tweet:<input id="tf2" type="textfield">
     <button onclick="button1Pressed()">tweet</button>
     <br>
-    <button onclick="button2Pressed()">X</button>
-    <br>
-    <input id="search" type="textfield">
+    <input id="tf3" type="textfield">
     <button onclick="button3Pressed()">検索</button>
-
-    <br>
-    <p id="result"></p>
+    <hr>
+    <p id="result">xxxx</p>
 </body>
 
 </html>
